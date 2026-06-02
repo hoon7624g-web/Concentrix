@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>윤상훈 · GEO 컨설턴트 지원 · 콘센트릭스서비스코리아</title>
+<meta name="description" content="정의되지 않은 문제를 구조로 바꾸고, 직접 데이터·도구로 구현해 온 사람. 한화오션 부서 간 문제 구조화 3년 4개월, 대치동 정시 컨설팅 4년+, 멀티 LLM 파이프라인 단독 구축, 100명+ 동시 접속 데이터 시스템 설계. 콘센트릭스 GEO(Generative Engine Optimization) 컨설턴트 지원 포트폴리오.">
+<meta name="author" content="윤상훈 Sanghoon Yoon">
+<meta name="theme-color" content="#F2EDE3">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:type" content="website">
+<meta property="og:title" content="윤상훈 · GEO 컨설턴트 지원 · 콘센트릭스">
+<meta property="og:description" content="정의되지 않은 문제 구조화 · LLM 검색 환경 이해 · 데이터 분석/자동화 구현. 막 정의되는 GEO 방법론을 함께 세우는 사람.">
+<meta property="og:locale" content="ko_KR">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23181612'/%3E%3Ccircle cx='11' cy='16' r='3.4' fill='%23E1502A'/%3E%3Ctext x='17.5' y='21' font-family='Georgia,serif' font-size='13' font-weight='700' fill='%23F2EDE3'%3EY%3C/text%3E%3C/svg%3E">
+
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-2:#ECE5D8;
+  --panel:#F7F3EB;
+  --ink:#191712;
+  --ink-soft:#4D483F;
+  --ink-faint:#8E887A;
+  --line:rgba(25,23,18,.14);
+  --line-strong:rgba(25,23,18,.28);
+  --flame:#DC4B23;
+  --flame-soft:#E86b46;
+  --deep:#13463E;
+  --deep-soft:rgba(19,70,62,.10);
+  --flame-tint:rgba(220,75,35,.10);
+  --maxw:1180px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;
+  font-size:17px;line-height:1.72;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  opacity:.05;mix-blend-mode:multiply;
+}
+
+::selection{background:var(--flame);color:var(--paper)}
+
+a{color:inherit;text-decoration:none}
+.mono{font-family:"JetBrains Mono",monospace}
+.fr{font-family:"Fraunces",Georgia,serif}
+
+/* ── scroll progress ── */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--flame);z-index:1000;transition:width .08s linear}
+
+/* ── side nav ── */
+.sidenav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
+.sidenav a{position:relative;width:9px;height:9px;border-radius:50%;border:1px solid var(--line-strong);transition:all .35s var(--ease)}
+.sidenav a::after{content:attr(data-l);position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:11.5px;font-weight:500;letter-spacing:0;color:var(--ink-soft);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.sidenav a:hover::after{opacity:1}
+.sidenav a.active{background:var(--flame);border-color:var(--flame);transform:scale(1.35)}
+@media(max-width:1080px){.sidenav{display:none}}
+
+/* ── layout ── */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+section{position:relative}
+
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--flame);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--flame)}
+.idx{font-family:"Fraunces",serif;font-style:italic;color:var(--ink-faint);font-weight:500}
+
+.sec-head{max-width:780px;margin-bottom:60px}
+.sec-title{font-size:clamp(30px,4.4vw,50px);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin:22px 0 20px}
+.sec-lede{font-size:clamp(16px,1.9vw,19px);color:var(--ink-soft);line-height:1.75;max-width:640px}
+.rule{height:1px;background:var(--line);width:100%}
+
+/* ── reveal ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.05s}.d2{transition-delay:.14s}.d3{transition-delay:.23s}.d4{transition-delay:.32s}.d5{transition-delay:.41s}
+
+/* ════════ HEADER ════════ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;transition:padding .4s var(--ease),background .4s var(--ease)}
+.topbar.shrink{padding:12px 40px;background:rgba(242,237,227,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--flame)}
+.topbar .tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--ink-soft)}
+@media(max-width:680px){.topbar .tag{display:none}}
+
+/* ════════ HERO ════════ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:140px 0 70px;position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 70% 35%,#000 0%,transparent 78%);
+  mask-image:radial-gradient(ellipse 80% 60% at 70% 35%,#000 0%,transparent 78%);}
+.hero-ghost{position:absolute;right:-3%;top:50%;transform:translateY(-50%);font-family:"Fraunces",serif;font-weight:700;font-size:min(34vw,440px);line-height:.8;color:var(--ink);opacity:.035;z-index:0;pointer-events:none;user-select:none}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero-eyebrow{margin-bottom:28px;font-family:"Pretendard Variable",Pretendard,sans-serif;letter-spacing:.01em;font-weight:600}
+.hero-name{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(15px,1.6vw,17px);letter-spacing:.02em;color:var(--ink-soft);margin-bottom:14px}
+.hero-name b{color:var(--ink);font-weight:600}
+.hero-title{font-size:clamp(38px,7vw,86px);font-weight:800;line-height:1.04;letter-spacing:-.035em;max-width:15ch}
+.hero-title .hl{color:var(--flame);position:relative;white-space:nowrap}
+.hero-title .hl::after{content:"";position:absolute;left:0;right:0;bottom:.08em;height:.09em;background:var(--flame);opacity:.28}
+.hero-sub{margin-top:34px;max-width:620px;font-size:clamp(16px,1.9vw,19px);color:var(--ink-soft);line-height:1.78}
+.hero-sub b{color:var(--ink);font-weight:600}
+
+.hero-stats{display:flex;gap:50px;margin-top:54px;flex-wrap:wrap}
+.hstat .num{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(40px,6vw,66px);line-height:1;letter-spacing:-.02em}
+.hstat .num .u{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:.4em;font-weight:600;color:var(--flame);margin-left:3px;letter-spacing:0}
+.hstat .lab{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13px;font-weight:500;letter-spacing:0;color:var(--ink-faint);margin-top:14px;max-width:20ch;line-height:1.55}
+
+.hero-foot{position:absolute;bottom:30px;left:0;right:0;z-index:2}
+.hero-foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.applied{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:100px;padding:9px 16px;display:inline-flex;align-items:center;gap:9px;background:var(--flame-tint)}
+.applied .k{color:var(--ink-faint)}
+.applied .v{font-family:"Pretendard Variable",Pretendard,sans-serif;color:var(--flame);font-weight:600;letter-spacing:0}
+.scrollcue{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.scrollcue .bar{width:1px;height:34px;background:linear-gradient(var(--flame),transparent);animation:cue 1.9s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:680px){.hero-foot{position:static;margin-top:50px}.hero-foot .wrap{flex-direction:column;align-items:flex-start}.scrollcue{display:none}}
+
+/* ════════ generic section pad ════════ */
+.block{padding:clamp(80px,11vw,150px) 0}
+
+/* ════════ 01 AXES ════════ */
+.axes{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line-strong)}
+.axis{padding:42px 34px 46px;border-right:1px solid var(--line);position:relative;transition:background .5s var(--ease)}
+.axis:last-child{border-right:none}
+.axis:hover{background:var(--panel)}
+.axis .an{font-family:"Fraunces",serif;font-style:italic;font-size:15px;color:var(--flame);margin-bottom:auto}
+.axis .ic{width:38px;height:38px;border:1.5px solid var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;margin:26px 0 22px}
+.axis .ic svg{width:19px;height:19px;stroke:var(--ink);fill:none;stroke-width:1.6}
+.axis h3{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:14px;line-height:1.3}
+.axis p{font-size:15px;color:var(--ink-soft);line-height:1.7}
+.axis p b{color:var(--ink);font-weight:600}
+@media(max-width:820px){.axes{grid-template-columns:1fr}.axis{border-right:none;border-bottom:1px solid var(--line)}.axis:last-child{border-bottom:none}}
+
+/* ════════ 02 TIMELINE ════════ */
+.tl{border-top:1px solid var(--line-strong)}
+.tl-item{display:grid;grid-template-columns:200px 1fr;gap:40px;padding:46px 0;border-bottom:1px solid var(--line);position:relative}
+.tl-item:hover .tl-role{color:var(--flame)}
+.tl-meta .date{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink);letter-spacing:.02em}
+.tl-meta .dur{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13px;font-weight:500;color:var(--ink-faint);margin-top:7px}
+.tl-meta .kicker{display:inline-block;margin-top:16px;font-family:"Pretendard Variable",Pretendard,sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0;color:var(--flame)}
+.tl-role{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:5px;transition:color .4s var(--ease);line-height:1.3}
+.tl-org{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13.5px;font-weight:500;color:var(--ink-faint);margin-bottom:18px;letter-spacing:0}
+.tl-desc{font-size:15.5px;color:var(--ink-soft);line-height:1.74;max-width:660px}
+.tl-desc b{color:var(--ink);font-weight:600}
+.tl-link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13px;font-weight:500;color:var(--deep);letter-spacing:0}
+.tl-link .arr{color:var(--flame)}
+@media(max-width:760px){.tl-item{grid-template-columns:1fr;gap:18px;padding:38px 0}}
+
+/* ════════ 03 MAPPING ════════ */
+.map-intro-band{background:var(--ink);color:var(--paper);border-radius:18px;padding:clamp(38px,5vw,58px);position:relative;overflow:hidden}
+.map-intro-band::after{content:"";position:absolute;right:-40px;bottom:-60px;width:280px;height:280px;border:1px solid rgba(242,237,227,.13);border-radius:50%}
+.map-intro-band::before{content:"";position:absolute;right:20px;bottom:-20px;width:180px;height:180px;border:1px solid rgba(242,237,227,.1);border-radius:50%}
+.map-intro-band .e{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--flame-soft);text-transform:uppercase;margin-bottom:18px;position:relative;z-index:1}
+.map-intro-band h3{font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-.02em;line-height:1.3;max-width:20ch;position:relative;z-index:1}
+.map-intro-band h3 em{font-family:"Pretendard Variable",Pretendard,sans-serif;font-style:normal;color:var(--flame-soft)}
+.map-intro-band .note{position:relative;z-index:1;margin-top:18px;max-width:60ch;font-size:14.5px;color:rgba(242,237,227,.66);line-height:1.7}
+.map-intro-band .note b{color:var(--paper);font-weight:600}
+
+.maps{margin-top:30px;display:flex;flex-direction:column;gap:18px}
+.maprow{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
+.maprow:hover{transform:translateY(-3px);box-shadow:0 22px 50px -28px rgba(25,23,18,.45);border-color:var(--line-strong)}
+.jd{padding:30px 30px;background:var(--paper-2)}
+.jd .t{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--ink-faint);margin-bottom:13px}
+.jd h4{font-size:18px;font-weight:700;line-height:1.35;letter-spacing:-.01em}
+.jd .scale{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13px;font-weight:500;color:var(--flame);margin-top:11px}
+.arrowcell{display:flex;align-items:center;justify-content:center;background:var(--paper-2);position:relative}
+.arrowcell svg{width:22px;height:22px;stroke:var(--flame);fill:none;stroke-width:1.7}
+.mine{padding:30px 30px}
+.mine .t{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--deep);margin-bottom:13px}
+.mine p{font-size:15px;color:var(--ink-soft);line-height:1.68}
+.mine p b{color:var(--ink);font-weight:600}
+@media(max-width:820px){.maprow{grid-template-columns:1fr}.arrowcell{padding:6px 0}.arrowcell svg{transform:rotate(90deg)}.jd{border-bottom:1px solid var(--line)}}
+
+/* ════════ 04 SALES CYCLE SYSTEM (centerpiece) ════════ */
+.camp{background:var(--ink);color:var(--paper);border-radius:22px;padding:clamp(40px,5vw,68px) clamp(28px,4vw,56px);position:relative;overflow:hidden}
+.camp-bg{position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(242,237,227,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(242,237,227,.045) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent 80%);
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent 80%);}
+.camp>*{position:relative;z-index:1}
+.camp-head .e{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--flame-soft);text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.camp-head .e::before{content:"";width:26px;height:1px;background:var(--flame-soft)}
+.camp-head h3{font-size:clamp(26px,3.6vw,42px);font-weight:800;letter-spacing:-.025em;margin:20px 0 18px;line-height:1.1}
+.camp-head h3 em{font-family:"Pretendard Variable",Pretendard,sans-serif;font-style:normal;color:var(--flame-soft)}
+.camp-head p{color:rgba(242,237,227,.72);max-width:680px;font-size:16px;line-height:1.76}
+.camp-head p b{color:var(--paper);font-weight:600}
+
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px;position:relative}
+.phases::before{content:"";position:absolute;top:38px;left:14%;right:14%;height:1px;background:repeating-linear-gradient(90deg,var(--flame-soft) 0,var(--flame-soft) 6px,transparent 6px,transparent 12px);opacity:.5;z-index:0}
+.phase{position:relative;z-index:1;background:rgba(242,237,227,.04);border:1px solid rgba(242,237,227,.13);border-radius:15px;padding:26px 22px 28px;transition:background .5s var(--ease),transform .5s var(--ease)}
+.phase:hover{background:rgba(242,237,227,.07);transform:translateY(-4px)}
+.phase .pnum{width:30px;height:30px;border-radius:50%;background:var(--flame);color:var(--paper);font-family:"Fraunces",serif;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.phase .plab{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--flame-soft);text-transform:uppercase;margin-bottom:6px}
+.phase h4{font-size:19px;font-weight:700;margin-bottom:18px;letter-spacing:-.01em}
+.modules{display:flex;flex-direction:column;gap:9px}
+.mod{font-size:13.5px;color:rgba(242,237,227,.82);line-height:1.5;padding:11px 13px;background:rgba(242,237,227,.05);border-radius:9px;border-left:2px solid rgba(242,237,227,.2);transition:border-color .4s}
+.phase:hover .mod{border-left-color:var(--flame-soft)}
+.mod b{color:var(--paper);font-weight:600}
+
+.autolayer{margin-top:18px;border:1px dashed rgba(232,107,70,.5);border-radius:13px;padding:20px 26px;display:flex;align-items:center;gap:20px;background:linear-gradient(90deg,rgba(220,75,35,.14),rgba(19,70,62,.14))}
+.autolayer .albadge{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--flame-soft);text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.autolayer .albadge .sq{width:9px;height:9px;background:var(--flame-soft);border-radius:2px}
+.autolayer p{font-size:14.5px;color:rgba(242,237,227,.85);line-height:1.6}
+.autolayer p b{color:var(--paper);font-weight:600}
+@media(max-width:820px){.phases{grid-template-columns:1fr;gap:14px}.phases::before{display:none}.autolayer{flex-direction:column;align-items:flex-start;gap:12px}}
+
+/* ════════ 05 AI ════════ */
+.ai-split{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
+.ai-now{border:1px solid var(--line-strong);border-radius:16px;padding:30px 30px;background:var(--panel)}
+.ai-now .lab{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.ai-now .lab .live{width:8px;height:8px;border-radius:50%;background:var(--flame);box-shadow:0 0 0 0 rgba(220,75,35,.5);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(220,75,35,.45)}70%{box-shadow:0 0 0 8px rgba(220,75,35,0)}100%{box-shadow:0 0 0 0 rgba(220,75,35,0)}}
+.ai-now .model{font-family:"Fraunces",serif;font-weight:600;font-size:27px;letter-spacing:-.01em}
+.ai-now .plan{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13.5px;font-weight:500;color:var(--flame);margin-top:7px}
+.ai-now .note{font-size:14.5px;color:var(--ink-soft);margin-top:18px;line-height:1.7}
+.uses{margin-top:24px;display:flex;flex-wrap:wrap;gap:9px}
+.use{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13.5px;font-weight:500;color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:8px 16px;background:var(--paper);transition:all .35s var(--ease)}
+.use:hover{border-color:var(--flame);color:var(--flame);transform:translateY(-2px)}
+.ai-copy h3{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.18;margin-bottom:20px}
+.ai-copy h3 .hl{color:var(--flame)}
+.ai-copy p{font-size:16px;color:var(--ink-soft);line-height:1.78;margin-bottom:16px}
+.ai-copy p b{color:var(--ink);font-weight:600}
+@media(max-width:860px){.ai-split{grid-template-columns:1fr;gap:36px}}
+
+/* ════════ 06 EVIDENCE ════════ */
+.evid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ecard{border:1px solid var(--line);border-radius:16px;padding:30px 28px 32px;background:var(--panel);display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);position:relative;overflow:hidden}
+.ecard:hover{transform:translateY(-5px);box-shadow:0 26px 56px -30px rgba(25,23,18,.42);border-color:var(--line-strong)}
+.ecard .ekind{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;color:var(--ink-faint);display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.ecard .ekind .badge{color:var(--flame)}
+.ecard h4{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.32;margin-bottom:12px}
+.ecard p{font-size:14.5px;color:var(--ink-soft);line-height:1.68;flex-grow:1}
+.ecard p b{color:var(--ink);font-weight:600}
+.emetrics{display:flex;gap:22px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.emetrics .em .n{font-family:"Fraunces",serif;font-weight:600;font-size:23px;letter-spacing:-.01em;line-height:1}
+.emetrics .em .n.km{font-family:"Pretendard Variable",Pretendard,sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.emetrics .em .l{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:12px;font-weight:500;color:var(--ink-faint);margin-top:7px;letter-spacing:0}
+.echo{position:absolute;right:-10px;top:-14px;font-family:"Fraunces",serif;font-style:italic;font-size:64px;color:var(--ink);opacity:.05;font-weight:700}
+@media(max-width:880px){.evid{grid-template-columns:1fr}}
+.evid-note{margin-top:24px;font-size:14px;color:var(--ink-faint);font-family:"Pretendard Variable",Pretendard,sans-serif;font-weight:500;letter-spacing:0;display:flex;align-items:center;gap:10px}
+.evid-note::before{content:"";width:18px;height:1px;background:var(--ink-faint)}
+
+/* ════════ CONTACT ════════ */
+.contact{background:var(--ink);color:var(--paper);border-radius:24px 24px 0 0;padding:clamp(70px,9vw,120px) 0 clamp(50px,6vw,80px);margin-top:clamp(60px,8vw,110px);position:relative;overflow:hidden}
+.contact-ghost{position:absolute;left:50%;bottom:-12%;transform:translateX(-50%);font-family:"Fraunces",serif;font-weight:700;font-size:min(28vw,380px);color:var(--paper);opacity:.04;line-height:.8;pointer-events:none;white-space:nowrap}
+.contact>.wrap{position:relative;z-index:1}
+.contact .e{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;color:var(--flame-soft);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.contact .e::before{content:"";width:26px;height:1px;background:var(--flame-soft)}
+.contact h2{font-size:clamp(30px,5vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.08;max-width:16ch}
+.contact h2 em{font-family:"Pretendard Variable",Pretendard,sans-serif;font-style:normal;color:var(--flame-soft)}
+.contact .lead{margin-top:26px;max-width:560px;color:rgba(242,237,227,.74);font-size:17px;line-height:1.76}
+.contact .lead b{color:var(--paper);font-weight:600}
+
+.cta-row{margin-top:46px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cta{display:inline-flex;align-items:center;gap:12px;background:var(--flame);color:var(--paper);font-weight:600;font-size:16px;padding:16px 26px;border-radius:100px;transition:transform .4s var(--ease),background .4s var(--ease);cursor:pointer;border:none;font-family:inherit}
+.cta:hover{transform:translateY(-3px);background:var(--flame-soft)}
+.cta svg{width:17px;height:17px;stroke:var(--paper);fill:none;stroke-width:1.8}
+.copied{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:13px;font-weight:500;color:var(--flame-soft);opacity:0;transition:opacity .3s}
+.copied.show{opacity:1}
+
+.cgrid{margin-top:54px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(242,237,227,.13);border:1px solid rgba(242,237,227,.13);border-radius:14px;overflow:hidden}
+.cgrid .ci{background:var(--ink);padding:24px 24px}
+.cgrid .ci .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--flame-soft);text-transform:uppercase;margin-bottom:10px}
+.cgrid .ci .v{font-size:15px;color:var(--paper);line-height:1.5;word-break:break-all}
+@media(max-width:760px){.cgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.cgrid{grid-template-columns:1fr}}
+
+.foot{padding:38px 0 30px;border-top:1px solid rgba(242,237,227,.13);margin-top:60px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.foot .l{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:12.5px;font-weight:500;color:rgba(242,237,227,.5);letter-spacing:0}
+.foot .r{font-family:"Pretendard Variable",Pretendard,sans-serif;font-style:normal;font-size:13.5px;font-weight:500;color:rgba(242,237,227,.6)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+<noscript><style>
+  .reveal{opacity:1!important;transform:none!important}
+  #progress{display:none}
+</style></noscript>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="sidenav" aria-label="섹션 내비게이션">
+  <a href="#top" class="active" data-l="시작" data-t="top"></a>
+  <a href="#axes" data-l="세 개의 축" data-t="axes"></a>
+  <a href="#career" data-l="경력" data-t="career"></a>
+  <a href="#mapping" data-l="직무 매핑" data-t="mapping"></a>
+  <a href="#system" data-l="GEO 워크플로" data-t="system"></a>
+  <a href="#ai" data-l="LLM 다루기" data-t="ai"></a>
+  <a href="#evidence" data-l="증거" data-t="evidence"></a>
+  <a href="#contact" data-l="연락" data-t="contact"></a>
+</nav>
+
+<div class="topbar" id="topbar">
+  <div class="brand"><span class="dot"></span>윤상훈 <span style="opacity:.5;font-weight:400">Sanghoon Yoon</span></div>
+  <div class="tag mono">GEO · LLM SEARCH · STRUCTURING</div>
+</div>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="top">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-ghost fr">GEO</div>
+  <div class="wrap">
+    <div class="hero-eyebrow eyebrow reveal d1">GEO 컨설턴트 지원 · 콘센트릭스서비스코리아</div>
+    <div class="hero-name reveal d1">PORTFOLIO &nbsp;·&nbsp; <b>윤상훈</b> &nbsp;Sanghoon Yoon</div>
+    <h1 class="hero-title reveal d2">아직 방법이 없는 문제에<br>가장 먼저 <span class="hl">구조</span>를<br>세웁니다.</h1>
+    <p class="hero-sub reveal d3">GEO(Generative Engine Optimization)는 <b>LLM 기반 검색이 무엇을 인용·노출하는지</b>를 다루는, 아직 방법론이 정립되는 중인 분야라고 이해합니다. 저는 한화오션과 대치동 정시 컨설팅에서 <b>정의되지 않은 문제를 구조로 바꿔</b> 왔고, 멀티 LLM 파이프라인을 직접 만들며 모델이 무엇에 어떻게 반응하는지를 다뤄 왔습니다. 그 두 가지가 만나는 자리가 GEO라고 생각합니다.</p>
+
+    <div class="hero-stats reveal d4">
+      <div class="hstat">
+        <div class="num"><span data-count="4" data-suffix="">4</span><span class="u">년+</span></div>
+        <div class="lab">정의되지 않은 문제를<br>구조화한 컨설팅 경험</div>
+      </div>
+      <div class="hstat">
+        <div class="num"><span data-count="3" data-suffix="">3</span><span class="u">종+</span></div>
+        <div class="lab">Claude·GPT·Gemini<br>멀티 LLM 파이프라인 구축</div>
+      </div>
+      <div class="hstat">
+        <div class="num"><span data-count="100" data-suffix="">100</span><span class="u">+</span></div>
+        <div class="lab">동시 접속 데이터 시스템<br>단독 설계·운영</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="wrap">
+      <span class="applied reveal d5"><span class="k">POSITION</span> <span class="v">GEO 컨설턴트</span></span>
+      <span class="scrollcue">SCROLL<span class="bar"></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 01 — THREE AXES ════════ -->
+<section class="block" id="axes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal d1"><span class="idx">01</span> &nbsp;Why me</div>
+      <h2 class="sec-title reveal d2">제가 가진 세 개의 축</h2>
+      <p class="sec-lede reveal d3">이 포지션은 <b style="color:var(--ink)">정의되지 않은 GEO 문제를 구조화하고, LLM 검색 환경을 진단해 개선을 제언하며, 그 분석을 데이터와 도구로 직접 구현할 사람</b>을 찾는다고 읽었습니다. 저는 그 세 가지를 동시에 갖췄습니다.</p>
+    </div>
+
+    <div class="axes reveal d2">
+      <div class="axis">
+        <div class="an fr">i.</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <h3>정의되지 않은 문제를<br>구조화하는 사람</h3>
+        <p>한화오션에서 부서마다 다르게 부르던 모호한 요구를 실행 항목으로 번역했고, 정시 컨설팅에서 수백 명의 정리되지 않은 상황을 단계와 기준으로 설계했습니다. <b>선례가 없는 문제를 구조로 바꾸는 일</b>이 제 본업이었습니다.</p>
+      </div>
+      <div class="axis">
+        <div class="an fr">ii.</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg></div>
+        <h3>LLM 검색 환경을<br>다뤄본 사람</h3>
+        <p>멀티 LLM 파이프라인을 단독으로 만들며, <b>Claude·GPT·Gemini가 같은 입력에 다르게 반응하는 패턴과 어떤 맥락·표현이 출력을 바꾸는지</b>를 직접 다뤘습니다. LLM이 무엇을 어떻게 인용·노출하는지를 진단하는 GEO의 코어와 맞닿습니다.</p>
+      </div>
+      <div class="axis">
+        <div class="an fr">iii.</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <h3>분석을 데이터·도구로<br>구현하는 사람</h3>
+        <p>자동 수집·분석 파이프라인을 API 기반으로 구축하고, 정규화된 데이터 구조를 직접 설계했으며, 어떤 지표를 볼지 정의해 가설을 검증했습니다. <b>Tool/API로 데이터를 수집·가공하고 모니터링 체계를 구축하는 일</b>을 직접 할 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 02 — CAREER ════════ -->
+<section class="block" id="career" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal d1"><span class="idx">02</span> &nbsp;Career</div>
+      <h2 class="sec-title reveal d2">같은 본질의 네 가지 경험</h2>
+      <p class="sec-lede reveal d3">방산 엔지니어링, 교육 컨설팅, 운영PM, 프로덕트 빌딩 — 멀어 보이지만 전부 <b style="color:var(--ink)">정의되지 않은 문제를 구조로 바꾸고, 그 구조를 데이터·도구로 구현한 일</b>이었습니다.</p>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <div class="date">2014.03 — 2017.06</div>
+          <div class="dur">3년 4개월</div>
+          <div class="kicker fr">문제 구조화 · 보고</div>
+        </div>
+        <div class="tl-body">
+          <h3 class="tl-role">모호한 요구를 구조로 바꾸고 보고로 전달한 시간</h3>
+          <div class="tl-org">한화오션(주) · 특수선무장설계팀 · 통신/무장 기본설계</div>
+          <p class="tl-desc">장보고-III 잠수함 프로젝트에서 부서마다 같은 문제를 다른 언어로 부르는 환경 속에서, 독일 장비 제조사·조달부서·배관/전장설계부서 사이의 모호한 요구를 <b>실행 가능한 항목으로 번역해 정리</b>했습니다. 또한 부서별 자료를 취합해 국방과학연구소 등 기관 보고용 자료로 구조화해 전달했습니다. <b>정의되지 않은 문제를 구조로 바꾸고, 분석 결과를 비전문가가 이해할 형태로 전달하는 일</b> — GEO의 진단·가이드·개선 제언과 결이 같다고 생각합니다.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <div class="date">2022.04 — 재직 중</div>
+          <div class="dur">4년+</div>
+          <div class="kicker fr">구조 설계 · 컨설팅 전달</div>
+        </div>
+        <div class="tl-body">
+          <h3 class="tl-role">정리되지 않은 상황을 단계와 기준으로 설계한 컨설팅</h3>
+          <div class="tl-org">대치동 정시 컨설팅 · 컨설턴트(프리랜서)</div>
+          <p class="tl-desc">매년 바뀌는 입시 제도에 맞춰 매 시즌 수백 명의 학생·학부모가 들고 오는 정리되지 않은 상황을, <b>사전 설문 → 대면 상담 → 후속 관리 → 파이널 콜로 분해하고 단계별 기준을 일관되게 설계</b>해 결과까지 안내했습니다. 분석 결과를 학부모가 이해하고 실행할 수 있는 형태로 전달해야 의미가 있었고, 이는 결과적으로 재등록·지인 추천 같은 리텐션으로 이어졌습니다. <b>정의되지 않은 문제를 구조화하고, 그 분석을 고객이 실행할 형태로 전달하는</b> 컨설팅의 본질을 반복한 경험입니다.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <div class="date">2026.01 — 2026.04</div>
+          <div class="dur">4개월</div>
+          <div class="kicker fr">멀티 LLM · 데이터 수집</div>
+        </div>
+        <div class="tl-body">
+          <h3 class="tl-role">멀티 LLM과 자동 수집 파이프라인을 단독으로 구축</h3>
+          <div class="tl-org">에듀테크 스타트업 · 운영PM</div>
+          <p class="tl-desc">여러 LLM을 하나로 묶은 <b>멀티 LLM 파이프라인</b> 데스크톱 앱과, 매일 수기로 모으던 데이터를 <b>API 기반 자동 수집·분석 파이프라인</b>으로 옮긴 데스크톱 앱을 기획·설계·개발·배포까지 단독 수행했습니다. 이 과정에서 모델별 출력 차이를 다루고, Tool/API로 데이터를 수집·가공하는 작업을 직접 구현했습니다. <b>LLM 환경을 다루고, 분석에 필요한 데이터를 수집·가공하는 일</b> — GEO 분석 환경 구축과 직접 연결됩니다.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <div class="date">2026.03 — 2026.04</div>
+          <div class="dur">2개월 · 운영 중</div>
+          <div class="kicker fr">데이터 설계 · 검증</div>
+        </div>
+        <div class="tl-body">
+          <h3 class="tl-role">데이터 구조를 설계하고 지표로 검증한 시스템</h3>
+          <div class="tl-org">프리랜서 · 풀스택 개발자(독립 프로젝트)</div>
+          <p class="tl-desc">실시간 매칭 웹앱을 단독으로 만들며 <b>9개 테이블과 수십 개의 함수로 구성된 정규화 데이터 구조</b>를 직접 설계했고, 100명+ 동시 접속 환경에서 안정적으로 운영 중입니다(현재도 유지보수 계약). 어떤 지표를 볼지 정의한 뒤 실제 데이터로 가설을 확인하고 수정하는 과정을 거쳤습니다. <b>데이터를 구조로 설계하고, 지표·실시간 상태를 추적·검증하는 일</b> — GEO 성과 모니터링 체계·대시보드 구축과 같은 역량을 씁니다.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <div class="date">2018 — 2022</div>
+          <div class="dur">학점 4.36 · 전체 1위</div>
+          <div class="kicker fr">새 도메인 흡수</div>
+        </div>
+        <div class="tl-body">
+          <h3 class="tl-role">낯선 분야를 빠르게 익혀 기준으로 정리하는 힘</h3>
+          <div class="tl-org">한서대학교 항공운항학과 · TOEIC 970 · 항공무선통신사</div>
+          <p class="tl-desc">다시 수능을 쳐 입학해 <b>전체 석차 1위</b>(학점 4.36)를 기록했고, 영어 비즈니스 커뮤니케이션(TOEIC 970)을 갖추고 있습니다. 디지털 마케팅·SEO·GEO처럼 제게 새로운 분야도 같은 방식으로 빠르게 흡수해 구조화할 수 있다고 생각합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 03 — JD MAPPING ════════ -->
+<section class="block" id="mapping" style="padding-top:0">
+  <div class="wrap">
+    <div class="map-intro-band reveal">
+      <div class="e">03 · Requirements → Experience</div>
+      <h3>채용 공고의 자격요건을, <em>제 경험으로 한 줄씩</em> 대응시켰습니다.</h3>
+      <p class="note">SEO·콘텐츠 전략·웹사이트 운영 같은 디지털 마케팅 도메인은 입사 후 가장 빠르게 학습해야 할 영역으로 보고 있습니다. 다만 <b>GEO 자체가 막 형성되는 분야인 만큼, 오래된 마케팅 경험보다 LLM 환경에 대한 깊은 이해와 정의되지 않은 문제를 빠르게 구조화하는 능력이 더 결정적</b>이며, 그 부분은 제 강점이라고 말씀드릴 수 있습니다.</p>
+    </div>
+
+    <div class="maps">
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">자격요건</div><h4>정의되지 않은 문제를 스스로 구조화하고 해결 방향을 설계하는 역량</h4><div class="scale">핵심 자격요건</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>한화오션에서 부서마다 다르게 부르던 모호한 요구를 실행 항목으로 <b>번역·구조화</b>했고, 정시 컨설팅에서 정리되지 않은 상황을 단계와 기준으로 설계했습니다. 정해진 답이 없는 문제를 구조로 바꾸는 것이 제 본업이었습니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">주요업무</div><h4>LLM/GenAI 기반 검색 환경에서의 GEO 컨설팅 (진단·가이드·개선 제언)</h4><div class="scale">직무의 코어</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>멀티 LLM 파이프라인을 단독으로 만들며 <b>Claude·GPT·Gemini의 출력 차이와 맥락·표현이 결과를 바꾸는 방식</b>을 직접 다뤘습니다. LLM이 무엇을 어떻게 인용·노출하는지를 진단·개선하는 작업과 직접 연결됩니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">주요업무</div><h4>GEO 분석 환경 구축 — Tool/API 활용, 데이터 수집·가공</h4><div class="scale">분석 환경 구축</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>API 기반 <b>자동 수집·분석 파이프라인</b>을 직접 구축하고, 외부 노출 리스크를 막는 프록시 구조까지 설계·운영한 경험이 있습니다. 데이터를 모으고 가공하는 분석 환경을 직접 만들 수 있습니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">주요업무</div><h4>성과 모니터링 체계 설계 및 대시보드 구축 / 가설 수립·실험 설계·성과 검증</h4><div class="scale">모니터링 · 검증</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>정규화 데이터 구조를 설계하고 <b>어떤 지표를 볼지 정의한 뒤 실제 데이터로 가설을 확인·수정</b>하는 과정을 반복했습니다. 실시간 상태 추적·운영자 화면도 직접 만들어, 성과 모니터링 체계 설계에 필요한 감각을 갖췄습니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">자격요건</div><h4>분석 결과를 구조화하여 전달할 수 있는 커뮤니케이션 능력</h4><div class="scale">전달 역량</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>한화오션에서 부서별 자료를 <b>기관 보고용으로 구조화</b>했고, 정시 컨설팅에서 분석을 학부모가 이해하고 실행할 형태로 전달했습니다. 기술적 내용을 비전문가에게 명확히 전달하는 데 익숙합니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">우대사항</div><h4>LLM·검색엔진·AI 기반 서비스에 대한 관심 또는 이해</h4><div class="scale">우대</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>최근 약 5개월간 멀티 LLM 파이프라인을 직접 설계·운영하며 모델별 특성을 용도별로 분담해 활용했고, LLM 기반 서비스를 직접 만들어 운영한 경험이 있습니다.</p></div>
+      </div>
+
+      <div class="maprow reveal">
+        <div class="jd"><div class="t">우대사항</div><h4>Python·JavaScript 등 데이터 처리·자동화 / 데이터 분석·시각화 도구 활용</h4><div class="scale">우대</div></div>
+        <div class="arrowcell"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="mine"><div class="t">제 경험</div><p>TypeScript·Node 기반으로 <b>데이터 처리·자동화 파이프라인</b>을 직접 구현해 왔고, Python도 데이터 작업에 활용합니다. 수집부터 가공·정리까지를 스크립트로 자동화하는 데 익숙합니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 04 — GEO WORKFLOW AS A SYSTEM ════════ -->
+<section class="block" id="system" style="padding-top:0">
+  <div class="wrap">
+    <div class="camp reveal">
+      <div class="camp-bg"></div>
+      <div class="camp-head">
+        <div class="e">04 · How I operate</div>
+        <h3>GEO를, <em>가설과 검증이 도는 시스템</em>으로.</h3>
+        <p>아직 정답이 없는 분야일수록, 감이 아니라 <b>진단 → 가설 → 실험 → 검증이 반복되는 루프</b>가 필요하다고 생각합니다. 정시 컨설팅에서 정해진 답이 없는 문제를 이렇게 다뤘고, 프로덕트를 만들 때 지표를 정의해 가설을 검증했습니다. 먼저 콘센트릭스의 기존 방법론과 클라이언트 맥락을 정확히 배운 뒤, 같은 방식을 GEO에 적용하고 싶습니다.</p>
+      </div>
+
+      <div class="phases">
+        <div class="phase">
+          <div class="pnum fr">1</div>
+          <div class="plab">Diagnose · 진단</div>
+          <h4>LLM이 무엇을<br>인용하는지 본다</h4>
+          <div class="modules">
+            <div class="mod"><b>현황 진단</b> — 주요 LLM/생성형 검색이 브랜드·콘텐츠를 어떻게 인용·노출하는지</div>
+            <div class="mod"><b>데이터 수집</b> — Tool/API로 모델 응답·인용 패턴을 수집·가공</div>
+            <div class="mod"><b>문제 구조화</b> — 흩어진 관찰을 진단 가능한 축으로 정리</div>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="pnum fr">2</div>
+          <div class="plab">Hypothesize · 가설/실험</div>
+          <h4>가설을 세우고<br>실험을 설계한다</h4>
+          <div class="modules">
+            <div class="mod"><b>가설 수립</b> — 어떤 콘텐츠·구조 변화가 인용에 영향을 주는지</div>
+            <div class="mod"><b>실험 설계</b> — 변수와 측정 지표를 정의한 비교 설계</div>
+            <div class="mod"><b>방법론화</b> — 반복 가능한 GEO 프레임워크로 정리·고도화</div>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="pnum fr">3</div>
+          <div class="plab">Verify · 검증/제언</div>
+          <h4>성과를 검증하고<br>개선을 제언한다</h4>
+          <div class="modules">
+            <div class="mod"><b>성과 검증</b> — 실험 전후 인용·노출 변화를 지표로 확인</div>
+            <div class="mod"><b>모니터링</b> — 지속 추적 체계와 대시보드 설계</div>
+            <div class="mod"><b>개선 제언</b> — 클라이언트가 실행할 형태로 구조화해 전달</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="autolayer">
+        <div class="albadge"><span class="sq"></span>BUILD LAYER</div>
+        <p>여기에 한 겹을 더합니다 — 진단·수집·모니터링의 반복 구간을 <b>직접 Tool/API와 스크립트로 자동화</b>해, 컨설턴트가 <b>해석하고 제언하는 데 더 많은 시간을 쓰도록</b> 만드는 것이 제가 더할 수 있는 부분입니다. 분석을 남에게 맡기지 않고 끝까지 직접 구현할 수 있다는 점이 제 차별점입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 05 — AI ════════ -->
+<section class="block" id="ai" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal d1"><span class="idx">05</span> &nbsp;LLM in practice</div>
+      <h2 class="sec-title reveal d2">LLM을 써본 사람이 아니라, <br>LLM을 다뤄본 사람</h2>
+      <p class="sec-lede reveal d3">GEO의 대상이 LLM인 만큼, 모델이 무엇에 어떻게 반응하는지를 직접 다뤄본 경험이 이 일의 출발점이라고 생각합니다.</p>
+    </div>
+
+    <div class="ai-split">
+      <div class="ai-copy reveal d2">
+        <h3>같은 입력에도 <span class="hl">모델은 다르게 반응</span>합니다.</h3>
+        <p>저는 여러 LLM을 하나의 파이프라인으로 묶어 단독으로 만들고 운영하며, <b>Claude·GPT·Gemini가 같은 입력에 다르게 반응하는 패턴, 어떤 맥락과 표현이 출력을 바꾸는지</b>를 반복해 다뤘습니다. 이는 LLM이 어떤 콘텐츠를 어떤 조건에서 인용·노출하는지를 진단하는 GEO 작업의 토대입니다.</p>
+        <p>또한 자동 수집·분석 파이프라인을 <b>API 기반으로 직접 구현</b>해, 모델 응답과 데이터를 모으고 가공하는 분석 환경을 만들 수 있습니다. 분석을 도구에 의존하지 않고 <b>필요한 측정 환경을 직접 짤 수 있다</b>는 것이 제 강점입니다.</p>
+        <p>각 설계 판단은 <b>Context · Decision · Trade-off</b> 구조로 정리해, 왜 그렇게 만들었는지 설명할 수 있도록 남겨 두었습니다.</p>
+      </div>
+
+      <div class="ai-now reveal d3">
+        <div class="lab"><span class="live"></span>Hands-on</div>
+        <div class="model fr">Claude · GPT · Gemini</div>
+        <div class="plan">멀티 LLM 파이프라인 · 데이터 수집·가공</div>
+        <p class="note">Claude는 긴 맥락과 구조화, GPT는 정형 출력, Gemini는 자료 분석으로 분담합니다. 모델별 출력 차이를 다루고, API로 데이터를 수집·가공하는 작업을 직접 구현합니다.</p>
+        <div class="uses">
+          <span class="use">인용·노출 진단</span>
+          <span class="use">모델별 출력 비교</span>
+          <span class="use">데이터 수집·가공</span>
+          <span class="use">가설·실험 설계</span>
+          <span class="use">성과 검증</span>
+          <span class="use">분석 자동화</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 06 — EVIDENCE ════════ -->
+<section class="block" id="evidence" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal d1"><span class="idx">06</span> &nbsp;Evidence</div>
+      <h2 class="sec-title reveal d2">말이 아니라, 운영한 결과물</h2>
+      <p class="sec-lede reveal d3">최근 약 5개월간 단독으로 빌드·운영한 세 가지 결과물입니다. <b style="color:var(--ink)">데이터 구조 설계, 멀티 LLM 파이프라인, 수집·분석 자동화</b> — GEO 분석 환경 구축에 그대로 연결되는 역량의 증거입니다.</p>
+    </div>
+
+    <div class="evid">
+      <div class="ecard reveal d1">
+        <div class="echo fr">01</div>
+        <div class="ekind"><span>Web · 실시간 운영</span><span class="badge">DATA</span></div>
+        <h4>실시간 데이터 시스템</h4>
+        <p>100명+ 동시 접속 환경을 실시간으로 운영하는 웹앱. <b>9개 테이블·수십 개 RPC</b>의 정규화 데이터 구조와 운영자 제어 화면을 직접 설계하고, 어떤 지표를 볼지 정의해 실제 데이터로 가설을 확인·수정했습니다. <b>데이터를 구조로 설계하고 지표·상태를 추적·검증</b>한 작업이라 GEO 모니터링 체계 설계와 가장 가깝습니다.</p>
+        <div class="emetrics">
+          <div class="em"><div class="n fr">100+</div><div class="l">동시 접속</div></div>
+          <div class="em"><div class="n fr">9</div><div class="l">정규화 테이블</div></div>
+          <div class="em"><div class="n fr">1인</div><div class="l">설계·구축·운영</div></div>
+        </div>
+      </div>
+
+      <div class="ecard reveal d2">
+        <div class="echo fr">02</div>
+        <div class="ekind"><span>Desktop · 사내 도구</span><span class="badge">LLM</span></div>
+        <h4>멀티 LLM 파이프라인 앱</h4>
+        <p>여러 LLM을 엮은 <b>multi-LLM 파이프라인</b> 데스크톱 앱. 에듀테크 스타트업 재직 시절 사내용으로 구축하며, <b>모델별 출력 차이를 다루고 각 모델을 용도별로 분담</b>하는 작업 방식을 다듬었습니다. LLM이 무엇에 어떻게 반응하는지를 다룬 경험이 GEO 진단의 토대로 직접 연결됩니다.</p>
+        <div class="emetrics">
+          <div class="em"><div class="n km fr">multi</div><div class="l">LLM 파이프라인</div></div>
+          <div class="em"><div class="n km">자동화</div><div class="l">제작 워크플로</div></div>
+        </div>
+      </div>
+
+      <div class="ecard reveal d3">
+        <div class="echo fr">03</div>
+        <div class="ekind"><span>Desktop · 사내 도구</span><span class="badge">DATA</span></div>
+        <h4>데이터 수집·분석 앱</h4>
+        <p>흩어진 데이터를 <b>API로 자동 수집·가공해 분석을 돕는</b> 데스크톱 앱. 수기로 모으던 정보를 자동으로 모으고 정리해 판단 근거를 빠르게 제공하도록 설계했습니다. <b>Tool/API로 데이터를 수집·가공하는</b> 일이라 GEO 분석 환경 구축과 같은 결의 작업입니다.</p>
+        <div class="emetrics">
+          <div class="em"><div class="n km">수집</div><div class="l">API 파이프라인</div></div>
+          <div class="em"><div class="n km">분석</div><div class="l">의사결정 지원</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:26px;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:24px 26px 18px;overflow:hidden">
+      <div class="mono" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px">샘플 구조 · GEO 진단 루프 — 수집부터 개선 제언까지 한 줄로 이어지는 흐름</div>
+      <svg viewBox="0 0 900 92" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block" role="img" aria-label="LLM 응답 수집에서 인용 진단, 가설·실험, 성과 검증, 개선 제언으로 이어지는 GEO 워크플로 예시">
+        <g font-family="'Pretendard Variable',Pretendard,sans-serif" font-size="13.5" font-weight="600" fill="var(--ink)" text-anchor="middle">
+          <rect x="0" y="20" width="150" height="52" rx="10" fill="var(--paper-2)" stroke="var(--line-strong)"/><text x="75" y="51">LLM 응답 수집</text>
+          <rect x="187.5" y="20" width="150" height="52" rx="10" fill="var(--paper-2)" stroke="var(--line-strong)"/><text x="262.5" y="51">인용·노출 진단</text>
+          <rect x="375" y="20" width="150" height="52" rx="10" fill="var(--paper-2)" stroke="var(--line-strong)"/><text x="450" y="51">가설·실험</text>
+          <rect x="562.5" y="20" width="150" height="52" rx="10" fill="var(--paper-2)" stroke="var(--line-strong)"/><text x="637.5" y="51">성과 검증</text>
+          <rect x="750" y="20" width="150" height="52" rx="10" fill="var(--paper-2)" stroke="var(--line-strong)"/><text x="825" y="51">개선 제언</text>
+        </g>
+        <g stroke="var(--flame)" stroke-width="2">
+          <line x1="153" y1="46" x2="181" y2="46"/><path d="M187 46 l-7 -4.5 v9 z" fill="var(--flame)" stroke="none"/>
+          <line x1="340.5" y1="46" x2="368.5" y2="46"/><path d="M374.5 46 l-7 -4.5 v9 z" fill="var(--flame)" stroke="none"/>
+          <line x1="528" y1="46" x2="556" y2="46"/><path d="M562 46 l-7 -4.5 v9 z" fill="var(--flame)" stroke="none"/>
+          <line x1="715.5" y1="46" x2="743.5" y2="46"/><path d="M749.5 46 l-7 -4.5 v9 z" fill="var(--flame)" stroke="none"/>
+        </g>
+      </svg>
+      <div style="font-size:13px;color:var(--ink-faint);margin-top:16px;line-height:1.6">제가 다뤄온 멀티 LLM 파이프라인과 수집·분석 경험을 GEO 진단 루프 관점으로 단순화한 예시입니다. 실제 프로덕트의 데이터 구조·운영자 화면은 면접 시 시연 가능합니다.</div>
+    </div>
+    <div class="evid-note">보안상 제품명·일부 화면은 비공개 — 면접 시 운영자 화면·데이터 구조·자동화 흐름은 시연 또는 상세 설명이 가능합니다.</div>
+  </div>
+</section>
+
+<!-- ════════ CONTACT ════════ -->
+<section class="contact" id="contact">
+  <div class="contact-ghost fr">GEO</div>
+  <div class="wrap">
+    <div class="e">07 · Let's talk</div>
+    <h2>막 정의되는 분야를,<br><em>함께 세우고 싶습니다.</em></h2>
+    <p class="lead">검색의 주체가 사람에서 <b>생성형 모델</b>로 옮겨가는 흐름 위에서, <b>정의되지 않은 문제를 구조로 바꾸고 직접 데이터로 검증하는 일</b> — 그게 제가 가장 잘하고 싶은 일입니다.</p>
+
+    <div class="cta-row">
+      <button class="cta" id="emailBtn" data-email="hoon7624g@gmail.com">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        이메일 보내기
+      </button>
+      <span class="copied" id="copied">✓ 이메일 주소가 복사되었습니다</span>
+    </div>
+
+    <div class="cgrid">
+      <div class="ci"><div class="k">Email</div><div class="v">hoon7624g@gmail.com</div></div>
+      <div class="ci"><div class="k">Phone</div><div class="v">+82 10 2765 7624</div></div>
+      <div class="ci"><div class="k">Portfolio</div><div class="v">hoon7624g-web.github.io/portfolio</div></div>
+      <div class="ci"><div class="k">Based in</div><div class="v">Seoul, Korea</div></div>
+    </div>
+
+    <div class="foot">
+      <span class="l">© <span id="yr">2026</span> 윤상훈 Sanghoon Yoon · GEO 컨설턴트 지원</span>
+      <span class="r">정의되지 않은 문제를, 가장 먼저 구조로.</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* reveal on scroll */
+  var revs = document.querySelectorAll('.reveal');
+  if(rm){ revs.forEach(function(e){e.classList.add('in')}); }
+  else{
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(e){io.observe(e)});
+  }
+
+  /* scroll progress + topbar shrink */
+  var prog = document.getElementById('progress');
+  var topbar = document.getElementById('topbar');
+  function onScroll(){
+    var st = window.scrollY || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h>0 ? (st/h*100) : 0) + '%';
+    topbar.classList.toggle('shrink', st > 40);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* side nav active state */
+  var dots = document.querySelectorAll('.sidenav a');
+  var secs = ['top','axes','career','mapping','system','ai','evidence','contact'].map(function(id){return document.getElementById(id)});
+  var navIO = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(en.isIntersecting){
+        var id = en.target.id;
+        dots.forEach(function(d){ d.classList.toggle('active', d.getAttribute('data-t')===id); });
+      }
+    });
+  },{threshold:.4, rootMargin:'-20% 0px -40% 0px'});
+  secs.forEach(function(s){ if(s) navIO.observe(s); });
+
+  /* count-up */
+  var nums = document.querySelectorAll('[data-count]');
+  function countUp(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(rm){ el.textContent = target + suffix; return; }
+    var dur = 1100, t0 = null;
+    function step(t){
+      if(!t0) t0 = t;
+      var p = Math.min((t-t0)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(target*eased) + suffix;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var cIO = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ countUp(en.target); cIO.unobserve(en.target);} });
+  },{threshold:.6});
+  nums.forEach(function(n){ cIO.observe(n); });
+
+  /* email copy + mailto */
+  var btn = document.getElementById('emailBtn');
+  var copied = document.getElementById('copied');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var em = btn.getAttribute('data-email');
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(em).then(function(){
+          copied.classList.add('show');
+          setTimeout(function(){copied.classList.remove('show')}, 2600);
+        });
+      }
+      window.location.href = 'mailto:' + em + '?subject=' + encodeURIComponent('[GEO 컨설턴트 지원] 윤상훈');
+    });
+  }
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
